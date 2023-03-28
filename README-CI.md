@@ -13,3 +13,6 @@ Name: Denver Woolard
     - After ensuring Docker is set to use WSL2 in the settings and after you have pulled the included Dockerfile + html. You can build the image by running the command `docker build -t <insertnamehere> .` This will create an image using the Dockerfile and the files including the html needed for the server. 
     - To run the created image and create a container, you use `docker run -d --name <insertnamehere> -p 80:8080 <previouslycreatedimagename>` The ports 80:8080 can be changed to the specific one the system is desired to use.
     - To ensure the webserver is working correctly, you can open a browser and go to `localhost:8080` or whichever port you specified in the previous step. This should display the html that was included, or customized.
+
+
+test
