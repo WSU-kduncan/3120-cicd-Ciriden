@@ -15,4 +15,13 @@ Name: Denver Woolard
     - To ensure the webserver is working correctly, you can open a browser and go to `localhost:8080` or whichever port you specified in the previous step. This should display the html that was included, or customized.
 
 
-test
+  - Pushing to Docker Hub without Github Actions
+    - To create a repo on Dockerhub you simply need sign up for a Dockerhub account and navigate to the Repository section, creating a public repo there of whatever name you wish. 
+    - `docker login -u <your-username>` allows you to login from the command line. At the prompt you can provide an Access Token, generated within your Dockerhub settings. This is more secure, since it does not allow access to your account and also if leaked, won't compromise the remaining contents of your Docker Account.
+    - In order to 'push' a Docker image to Docker Hub, one must simply use the `docker push <yourusername>/<imagename>:<version>` command. This of course requires a Docker Hub account, which was outlined how to log in to in the previous step.
+
+  - Pushing to Docker Hub using Github Actions
+    - To create and configure Github secrets. One must navigate to a repo they own and intend to use to push to Docker Hub. Opening the settings for the repo, under 'security' there is a 'secrets and variables' section. Opening the 'Actions' from there allows you to create new github secrets. Create one, set it's name, for example `DOCKER_USERNAME` and `DOCKER_PASSWORD` which were used for this project. The values within will be hidden, but can be referenced within workflows.
+    - Next a Github Workflow is created for the Repository. This is controlled by a configred yml file that details the variables and steps to push to Docker Hub. It first sets what will trigger the workflow, in this case it is triggered when branch [main] is pushed to, causing the rest of the workflow to start. This workflow logs into DockerHub using the created DOCKER secrets and pushes the image contained in the local Docker file to the specified Docker Hub repo.
+    - In order to customize the workflow to an individual user, they would need to ensure their personal `DOCKER-USERNMAE` and `DOCKER_PASSWORD` secrets are set within the repo. Then define their intended Docker Repository. Other things can be changed too, such as when the workflow will run. But since the most important variables are references and not directly stored, they can be used without editing the file, provided the secrets being referenced follow the same names.
+
