@@ -4,13 +4,13 @@ Name: Denver Woolard
 
 ## CD Project Overview
 
-  - For Project 5, we are building off of the CI we created to use it for CD, or Continuous Deployment. For the first section, we are updating ourgithub action workflow to use Semnatic Versioning. To not simply just overwrite all of our previous builds with the singular tag `latest`. Instead it will tag each build with version numbers and 'save' them for reference. So when a build is pushed, the previous build is not simply overwritten by 'latest' but saved as build 0.1.1 for example. This is once again using github actions to push to Docker, using a tool called docker/metadat-actions to generate the data for the tags. 
+  - For Project 5, we are building off of the CI we created to use it for CD, or Continuous Deployment. For the first section, we are updating our github action workflow to use Semnatic Versioning. To not simply just overwrite all of our previous builds with the singular tag `latest`. Instead it will tag each build with version numbers and 'save' them for reference. So when a build is pushed, the previous build is not simply overwritten by 'latest' but saved as build 0.1.1 for example. This is once again using github actions to push to Docker, using a tool called docker/metadata-actions to generate the data for the tags. 
 
-  - The second part of project 5 is about creating a server of sorts with the image we created. A running webserver that will update alongside updates pushed to the Dockerhub repository it originates from. A script will ensure the container restarts in order to the apply the updated changes as well as storing the previous version, much like semnatic versioning mentioned earlier. The webhook is used to easily communicate with the server and restart it when needed. This is all part of the Continuous Deployment process, ensuring the server is kept up tp date.
+  - The second part of project 5 is about creating a server of sorts with the image we created. A running webserver that will update alongside updates pushed to the Dockerhub repository it originates from. A script will ensure the container restarts in order to the apply the updated changes as well as storing the previous version, much like semnatic versioning mentioned earlier. The webhook is used to easily communicate with the server and restart it when needed. This is all part of the Continuous Deployment process, ensuring the server is kept up tp date automatically.
 
   ```mermaid
 flowchart LR
-A{Devs} -->|Git Commit| B{Shared Repository -Github}
+A{Devs} -->|Commit Updates| B{Shared Repository -Github}
 B -->|Automatic Integration Tests| C(Test Enviornment)
 C -->|Build Error| A
 C -->|Build Success| D{Updated Repository}
@@ -27,4 +27,6 @@ D -->|Automatic Deployment| E{End Users/Servers}
 
   - To install docker to a freshly configured instance, you first need to ensure the instance is running up to date. You can do this with `sudo apt update` followed by `sudo apt upgrade`. Once the system is updated we can install docker using a series of commands. First to install Docker itself you use `sudo apt install docker.io` Then to retrieve any dependencies it might need you can use `sudo snap install docker`. And with that, Docker is installed.
     
-  - 
+  - A container restart script is simply the method and predefined commands to run in order to ensure the container is restarted only when needed. It's purpose is to allow the server to update and restart once the updates come through the pipeline.
+
+  - Note: I ran into issues accessing my container from my network, ie. not the host instance. Even after redeploying the container multiple times with different specified ports and attempting to access it via it's IP `172.17.0.1` and the port specified `8080`. I was never able to access it outside of my instance.
